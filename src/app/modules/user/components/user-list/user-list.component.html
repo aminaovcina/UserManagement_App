@@ -1,0 +1,119 @@
+<app-search (onFilter)="onFilter($event)"></app-search>
+<div class="content">
+  <div class="container">
+    <app-loading *ngIf="LOADING"></app-loading>
+    <div class="mt-4" *ngIf="!LOADING">
+      <div *ngIf="paginatorConfig.length > 0" class="table">
+        <table mat-table class="mt-3 table" [dataSource]="USERS">
+          <caption></caption>
+          <ng-container matColumnDef="firstName">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              (click)="sortChange('FirstName')"
+            >
+              First name <mat-icon inline="true">sort_by_alpha</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.firstName }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="lastName">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              (click)="sortChange('LastName')"
+            >
+              Last name <mat-icon inline="true">sort_by_alpha</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.lastName }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="username">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              (click)="sortChange('Username')"
+            >
+              Username <mat-icon inline="true">sort_by_alpha</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.username }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef (click)="sortChange('Email')">
+              Email <mat-icon inline="true">sort_by_alpha</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.email }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.status?.name }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [routerLink]="['edit', element.userId]">
+                <mat-icon [ngStyle]="{ color: '#19a26e' }">edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="assign">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-icon-button
+                [routerLink]="['permissions', element.userId]"
+              >
+                <mat-icon [ngStyle]="{ color: '#0275d8' }"
+                  >supervised_user_circle</mat-icon
+                >
+              </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                type="button"
+                mat-icon-button
+                (click)="open(mymodal, element.userId)"
+              >
+                <mat-icon [ngStyle]="{ color: '#ee3940' }">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+    <div class="mt-2">
+      <mat-paginator
+        [length]="paginatorConfig.length"
+        [pageSize]="paginatorConfig.pageSize"
+        [pageSizeOptions]="paginatorConfig.pageSizeOptions"
+        (page)="onPaginatorPageChange($event)"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+<!-- ovo bi trebalo implementirati kroz totalno odvojenu komponentu kojoj bi se proslijedio id korisnika -->
+<!-- Modal -->
+<ng-template #mymodal let-modal>
+  <div class="modal-header"></div>
+  <div class="modal-body">Are you sure you want to delete this user?</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-dark" (click)="delete()">
+      Confirm
+    </button>
+  </div>
+</ng-template>

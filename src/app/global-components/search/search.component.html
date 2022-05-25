@@ -1,0 +1,59 @@
+<mat-accordion class="example-headers-align flex" multi="true">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h6 class="adjusting">Search</h6>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="GlobalSearchForm">
+      <div class="row">
+        <!--form group : begin-->
+        <div class="col-md-12">
+          <div class="form-group">
+            <input
+              type="text"
+              formControlName="search"
+              class="form-control"
+              id="search"
+              placeholder="Start typing..."
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label>Status</label>
+          <ng-select
+            class="custom field"
+            appearance="fill"
+            [items]="STATUSES"
+            bindLabel="name"
+            labelForId="state"
+            [multiple]="false"
+            [closeOnSelect]="true"
+            clearAllText="Clear"
+            formControlName="status"
+            [appendTo]="'body'"
+            [clearable]="false"
+          >
+          </ng-select>
+        </div>
+        <div class="col-md-6">
+          <label>User permissions</label>
+          <ng-select
+            class="custom field"
+            appearance="fill"
+            [items]="USER_PERMISSIONS"
+            bindLabel="description"
+            labelForId="state"
+            [multiple]="true"
+            [closeOnSelect]="false"
+            clearAllText="Clear"
+            formControlName="userPermissions"
+            [appendTo]="'body'"
+            [clearable]="false"
+          >
+          </ng-select>
+        </div>
+      </div>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

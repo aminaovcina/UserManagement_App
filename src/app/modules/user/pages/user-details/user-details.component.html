@@ -1,0 +1,173 @@
+<div class="container">
+  <div class="content">
+    <div class="basic-container">
+      <div *ngIf="LOADING">
+        <app-loading></app-loading>
+      </div>
+      <div class="container" *ngIf="!LOADING">
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="card">
+              <h2 *ngIf="!IS_UPDATE" class="card-title text-center">
+                User information
+              </h2>
+              <h2 *ngIf="IS_UPDATE" class="card-title text-center">
+                Edit user information
+              </h2>
+
+              <div class="card-body py-md-4">
+                <form [formGroup]="formDetails" (ngSubmit)="submit()">
+                  <div class="row col-md-12">
+                    <div class="form-group col-md-6">
+                      <input
+                        type="text"
+                        formControlName="firstName"
+                        class="form-control"
+                        id="name"
+                        placeholder="First name"
+                      />
+                      <mat-error
+                        *ngIf="
+                          firstName?.errors?.['required'] && firstName?.touched
+                        "
+                      >
+                        First name is required.
+                      </mat-error>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input
+                        type="text"
+                        formControlName="lastName"
+                        class="form-control"
+                        id="lastName"
+                        placeholder="Last name"
+                      />
+                      <mat-error
+                        *ngIf="
+                      lastName?.errors?.['required'] && lastName?.touched
+                      "
+                      >
+                        Last name is required.
+                      </mat-error>
+                    </div>
+                  </div>
+
+                  <div class="form-group" *ngIf="!IS_UPDATE">
+                    <input
+                      type="text"
+                      formControlName="username"
+                      class="form-control"
+                      id="username"
+                      placeholder="Username"
+                    />
+                    <mat-error
+                      *ngIf="
+                    username?.errors?.['required'] && username?.touched
+                  "
+                    >
+                      Username is required.
+                    </mat-error>
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="email"
+                      formControlName="email"
+                      class="form-control"
+                      id="email"
+                      placeholder="Email"
+                    />
+                    <mat-error
+                      *ngIf="
+                    email?.errors?.['email'] && email?.touched
+                  "
+                    >
+                      Email required.
+                    </mat-error>
+                  </div>
+                  <div class="row col-md-12" *ngIf="!IS_UPDATE">
+                    <div class="form-group col-md-6">
+                      <input
+                        formControlName="password"
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        placeholder="Password"
+                      />
+                      <mat-error
+                        *ngIf="
+                      password?.errors?.['required'] && password?.touched
+                    "
+                      >
+                        Password is required.
+                      </mat-error>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input
+                        type="password"
+                        formControlName="confirmPassword"
+                        class="form-control"
+                        id="confirm-password"
+                        placeholder="Confirm password"
+                      />
+                      <mat-error
+                        *ngIf="
+                      confirmPassword?.errors?.['required'] && confirmPassword?.touched
+                    "
+                      >
+                        Confirm password is required.
+                      </mat-error>
+                      <mat-error *ngIf="confirmPassword?.errors?.['mismatch']"
+                        >Passwords do not match</mat-error
+                      >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Status</label>
+                    <ng-select
+                      class="custom field"
+                      appearance="fill"
+                      [items]="STATUSES"
+                      bindLabel="name"
+                      labelForId="state"
+                      [multiple]="false"
+                      [closeOnSelect]="true"
+                      clearAllText="Clear"
+                      formControlName="status"
+                      [appendTo]="'body'"
+                      [clearable]="false"
+                    >
+                    </ng-select>
+                  </div>
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-between"
+                  >
+                    <div></div>
+                    <button
+                      type="button"
+                      *ngIf="IS_UPDATE"
+                      (click)="submit()"
+                      class="btn btn-dark"
+                    >
+                      <mat-icon inline="true">create</mat-icon>
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      [disabled]="!formDetails.valid"
+                      *ngIf="!IS_UPDATE"
+                      (click)="submit()"
+                      class="btn btn-dark"
+                    >
+                      <mat-icon inline="true">publish</mat-icon>Create
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
